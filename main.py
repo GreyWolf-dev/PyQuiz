@@ -1,6 +1,5 @@
 # Written by Younès B. and Curtis Newton
 # December 2022
-import math
 
 try: import pygame as pg, random
 except ImportError: raise SystemExit("Sorry, can´t find required libraries.")
