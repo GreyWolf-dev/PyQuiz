@@ -18,7 +18,7 @@ class App:
         pg.display.set_caption("PyQuiz")
         pg.display.set_icon(pg.transform.scale(pg.image.load("assets/icon.png"), (32 * 1.5, 32 * 1.5)))
 
-        self.margin, self.writing = 20, True
+        self.margin, self.writing, self.questions, self.good_questions = 20, True, 0, 0
         self.credits, self.question = "Written by Younès B., and Curtis Newton, 2022", "Press Space Key to start."
         self.font = pg.font.Font("assets/dialog_font.ttf", 25)
         self.clock = pg.time.Clock()
@@ -32,18 +32,10 @@ class App:
         if random.randint(0, 1): self.question = random.choice(open("assets/yes.txt", "r").readlines())
         else: self.question = random.choice(open("assets/no.txt", "r").readlines())
 
-    def make_typing_effect(self) -> None:
+    def make_typing_effect(self, text: str, timelaps: bool, ypos: int) -> None:
         self.char_x_pos = 0
-        for letter in self.question:
-            self.screen.blit(self.font.render(letter, 0, pg.Color("black")), (self.char_x_pos, self.margin * 3.5))
-            pg.display.flip()
-            self.clock.tick(25)
-            self.char_x_pos += self.margin
-
-    def make_typing_effect_for_credits(self, timelaps: bool) -> None:
-        self.char_x_pos = 0
-        for letter in self.credits:
-            self.screen.blit(self.font.render(letter, 0, pg.Color("black")), (self.char_x_pos, self.margin))
+        for letter in text:
+            self.screen.blit(self.font.render(letter, 0, pg.Color("black")), (self.char_x_pos, ypos))
             pg.display.flip()
             if timelaps: self.clock.tick(25)
             self.char_x_pos += self.margin
@@ -51,18 +43,21 @@ class App:
     def draw_background(self) -> None: self.screen.blit(self.bg, (0, 0))
 
     def new_question(self) -> None:
-        self.make_typing_effect_for_credits(False)
+        self.questions += 1
+        self.make_typing_effect(self.credits, False, self.margin)
         self.choose_randomly_question()
-        self.make_typing_effect()
+        self.make_typing_effect(self.question, True, self.margin * 3)
         self.writing = False
 
     def display_result(self, value: bool) -> None:
-        if value: self.result = self.font.render("Good job ! Press Space Key to continue.", 0, pg.Color("black"))
-        else: self.result = self.font.render("Your answer is wrong. Press Space Key to continue.", 0, pg.Color("black"))
+        if value:
+            self.result = "Good job ! Press Space Key to continue."
+            self.good_questions += 1
+        else: self.result = "Your answer is wrong. Press Space Key to continue."
 
         self.draw_background()
-        self.make_typing_effect_for_credits(False)
-        self.screen.blit(self.result, (self.screen.get_width() / 2 - self.result.get_width() / 2, self.screen.get_height() / 2 - self.result.get_height() / 2))
+        self.make_typing_effect(self.credits, False, self.margin)
+        self.make_typing_effect(self.result, True, self.margin * 3)
         pg.display.flip()
 
         running = True
@@ -71,16 +66,29 @@ class App:
                 if evt.type == pg.QUIT or evt.type == pg.KEYDOWN and evt.key == pg.K_ESCAPE: self.quit()
                 elif evt.type == pg.KEYDOWN and evt.key == pg.K_SPACE: running = False
 
+        self.check_end()
+
 
     def play_game_music(self) -> None:
         music = pg.mixer.music.load("assets/music.wav")
         pg.mixer.music.play(-1, 0.0, 0)
 
+    def check_end(self) -> None:
+        if self.questions == 10:
+            self.draw_background()
+            self.make_typing_effect(self.credits, False, self.margin)
+            self.make_typing_effect(f"You have {self.good_questions} correct answers of 10. Press Space Key to continue.", True, self.margin * 3)
+
+            running = True
+            while running:
+                for evt in pg.event.get():
+                    if evt.type == pg.QUIT or evt.type == pg.KEYDOWN and evt.key == pg.K_ESCAPE or evt.type == pg.KEYDOWN and evt.key == pg.K_SPACE: self.quit()
+
     def wait_for_start(self) -> None:
         self.play_game_music()
         self.draw_background()
-        self.make_typing_effect_for_credits(True)
-        self.make_typing_effect()
+        self.make_typing_effect(self.credits, True, self.margin)
+        self.make_typing_effect(self.question, True, self.margin * 3)
 
         running = True
         while running:
@@ -145,5 +153,7 @@ class Buttons:
         pg.draw.rect(self.screen, pg.Color("red"), self.no)
         self.text = self.font.render("False", 0, pg.Color("black"))
         self.screen.blit(self.text, self.no)
+
+
 
 if __name__ == "__main__": app = App()
