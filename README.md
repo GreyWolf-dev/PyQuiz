@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8"/>
-        <title>PyQuiz 2.0 README</title>
-        <link rel="icon" href="assets/icon.png">
-    </head>
-    <body>
         <style>
             body {
                 background-color: chartreuse;
@@ -27,10 +19,10 @@
             }
         </style>
         <h1>
-            PyQuiz v1.0, CNYB
+            PyQuiz v1.0, old CNYB association
         </h1><img src="assets/icon.png"/>
         <p>
-            This application was written by <a href="https://github.com/CaptainFuture-CN">Younès B. and Curtis Newton</a>. Open main.pyw, and click anywhere on the window to get a random question.
+            This application was written by Ixodev. Open main.pyw, and click anywhere on the window to get a random question.
             If you want to add a new question, and you know the answer is "True", please type the question in the file yes.txt.
             If you want to add a new question, and you know the answer is "False", please type the question in the file no.txt.
             A new question MUST begin with a new line.
@@ -39,8 +31,6 @@
         <img src="assets/yblogo.png"/>
         <img src="assets/cnlogo.png"/>
         <div></div>
-        <button title="Click me!" onclick="window.location.href='https://github.com/CaptainFuture-CN'">Our GitHub page</button>
-        <button title="Click me!" onclick="window.print()">Print this page</button>
         <p><strong><b>Copyright &copy; CNYB, December 2022</b></strong></p>
     </body>
 </html>
