@@ -1,23 +1,3 @@
-        <style>
-            body {
-                background-color: chartreuse;
-            }
-            h1 {
-                font-family: "Times New Roman";
-                color: #0000ff;
-                size: 40px;
-            }
-            p {
-                font-family: "Times New Roman";
-                color: #0000ff;
-                size: 16px;
-            }
-            button {
-                font-family: "Times New Roman";
-                background-color: #0000ff;
-                color: chartreuse;
-            }
-        </style>
         <h1>
             PyQuiz v1.0, old CNYB association
         </h1><img src="assets/icon.png"/>
