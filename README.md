@@ -1,3 +1,4 @@
+
         <h1>
             PyQuiz v1.0, old CNYB association
         </h1><img src="assets/icon.png"/>
@@ -12,5 +13,3 @@
         <img src="assets/cnlogo.png"/>
         <div></div>
         <p><strong><b>Copyright &copy; CNYB, December 2022</b></strong></p>
-    </body>
-</html>
